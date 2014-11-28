@@ -1,0 +1,10 @@
+wordpress:
+  build: ./wordpress
+  volumes:
+    - "./wordpress/wordpress:/var/www/html/wordpress"
+nginx:
+  build: ./nginx
+  ports:
+    - "80:80"
+  links:
+    - wordpress
