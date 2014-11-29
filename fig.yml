@@ -1,10 +1,23 @@
 wordpress:
   build: ./wordpress
-  volumes:
-    - "./wordpress/wordpress:/var/www/html/wordpress"
+  links:
+    - database
 nginx:
   build: ./nginx
+  volumes_from:
+    - wordpress
   ports:
     - "80:80"
   links:
     - wordpress
+database:
+  build: ./database
+  volumes_from:
+    - dbdata
+  environment:
+    - MYSQL_ROOT_PASSWORD=myextrasecretpassword
+    - MYSQL_DATABASE=wordpress
+    - MYSQL_USER=username
+    - MYSQL_PASSWORD=password
+dbdata:
+  build: ./db_data
