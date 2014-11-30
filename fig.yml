@@ -1,9 +1,9 @@
 wordpress:
-  build: ./wordpress
+  build: ./docker/wordpress
   links:
     - database
 nginx:
-  build: ./nginx
+  build: ./docker/nginx
   volumes_from:
     - wordpress
   ports:
@@ -11,7 +11,7 @@ nginx:
   links:
     - wordpress
 database:
-  build: ./database
+  build: ./docker/database
   volumes_from:
     - dbdata
   environment:
@@ -20,4 +20,4 @@ database:
     - MYSQL_USER=username
     - MYSQL_PASSWORD=password
 dbdata:
-  build: ./db_data
+  build: ./docker/db_data
