@@ -1,0 +1,6 @@
+{
+  "name": "decking-nix",
+  "dependencies": {
+    "decking": "~0.2.1"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "images": {
+    "wordpress/database": "./docker/database",
+    "wordpress/nginx": "./docker/nginx",
+    "wordpress/dbdata": "./docker/db_data",
+    "wordpress/wordpress": "./docker/wordpress"
+  },
+  "containers": {
+    "wordpress": {
+      "image": "wordpress/wordpress",
+      "dependencies": ["database"]
+    },
+    "nginx": {
+      "image": "wordpress/nginx",
+      "mount-from": ["wordpress"],
+      "port": ["80:80"],
+      "dependencies": ["wordpress"]
+    },
+    "database": {
+      "image": "wordpress/database",
+      "mount-from": ["dbdata"],
+      "env": [
+        "MYSQL_ROOT_PASSWORD=myextrasecretpassword",
+        "MYSQL_DATABASE=wordpress",
+        "MYSQL_USER=username",
+        "MYSQL_PASSWORD=password"
+      ]
+    },
+    "dbdata": {
+      "image": "wordpress/dbdata"
+    }
+  },
+  "clusters": {
+    "main": ["wordpress", "nginx", "database", "dbdata"]
+  }
+}
